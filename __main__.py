@@ -1,3 +1,6 @@
+# chess with an engine
+# by me
+
 class Chess:
     def __init__(self):
         self.__current = None
@@ -117,7 +120,7 @@ class Chess:
             for square in range(8):
                 if self.__current[row][square] == "b" and not self.__turn % 2:
                     # up left
-                    for i in range(7):
+                    for i in range(1,8):
                         try:
                             if self.__current[row - i][square - i] == " " and row - i >= 0 and square - i >= 0:
                                 bishop_moves.append((row - i, square - i))
@@ -132,12 +135,10 @@ class Chess:
                             break
                             # out of bounds
                     # up right
-                    # do i + 1
-                    for i in range(7):
+                    for i in range(1,8):
                         try:
                             print(i, self.__current[row][square], row - i >= 0 and square + i <= 7)
                             if self.__current[row - i][square + i] == " " and row - i >= 0 and square + i <= 7:
-                                print("hmmm")
                                 bishop_moves.append((row - i, square + i))
 
                             elif self.__current[row - i][square + i].upper() == self.__current[row - i][square + i] and row - i >= 0 and square + i <= 7:
@@ -151,7 +152,7 @@ class Chess:
                             break
                             # out of bounds
                     # down left
-                    for i in range(7):
+                    for i in range(1,8):
                         try:
                             if self.__current[row + i][square - i] == " " and row + i <= 7 and square - i >= 0:
                                 bishop_moves.append((row + i, square - i))
@@ -166,7 +167,7 @@ class Chess:
                             break
                             # out of bounds
                     # down right
-                    for i in range(7):
+                    for i in range(1,8):
                         try:
                             if self.__current[row + i][square + i] == " " and row + i <= 7 and square + i >= 0:
                                 bishop_moves.append((row + i, square + i))
@@ -183,7 +184,7 @@ class Chess:
 
                 elif self.__current[row][square] == "B" and self.__turn % 2:
                     # up left
-                    for i in range(7):
+                    for i in range(1,8):
                         try:
                             if self.__current[row - i][square - i] == " " and row - i >= 0 and square - i >= 0:
                                 bishop_moves.append((row - i, square - i))
@@ -198,7 +199,7 @@ class Chess:
                             break
                             # out of bounds
                     # up right
-                    for i in range(7):
+                    for i in range(1,8):
                         try:
                             if self.__current[row - i][square + i] == " " and row - i >= 0 and square + i <= 7:
                                 bishop_moves.append((row - i, square + i))
@@ -213,7 +214,7 @@ class Chess:
                             break
                             # out of bounds
                     # down left
-                    for i in range(7):
+                    for i in range(1,8):
                         try:
                             if self.__current[row + i][square - i] == " " and row + i <= 7 and square - i >= 0:
                                 bishop_moves.append((row + i, square - i))
@@ -228,7 +229,7 @@ class Chess:
                             break
                             # out of bounds
                     # down right
-                    for i in range(7):
+                    for i in range(1,8):
                         try:
                             if self.__current[row + i][square + i] == " " and row + i <= 7 and square + i >= 0:
                                 bishop_moves.append((row + i, square + i))
@@ -261,9 +262,13 @@ class Chess:
 
             if piece == "b":
                 moves = self.Bishop()
-                print(moves)
-                for things in moves:
-                    print(moves)
+                if (x2, y2) in moves:
+                    self.__old.append(self.__current)
+                    self.__current[x2][y2] = piece
+                    self.__current[x1][y1] = " "
+                    self.__turn += 1
+                else:
+                    print("bishop fail")
 
         else:
             if piece == "P":
@@ -275,6 +280,15 @@ class Chess:
                     self.__turn += 1
                 print('fail')
 
+            if piece == "B":
+                moves = self.Bishop()
+                if (x2, y2) in moves:
+                    self.__old.append(self.__current)
+                    self.__current[x2][y2] = piece
+                    self.__current[x1][y1] = " "
+                    self.__turn += 1
+
+
 
 
 board = Chess()
@@ -284,10 +298,10 @@ def main():
     board.createBoard()
     print("board created")
     board.make_move(6,3,4,3) #e4
-    board.boardPrint()
     board.make_move(1,4,3,4) #e5
-    board.boardPrint()
-    board.make_move(7,2,3,4)
+    board.make_move(7,2,3,6)
+    board.make_move(0,5,3,2)
+    board.make_move(4,3,3,2)
     board.boardPrint()
 
 
